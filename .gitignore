@@ -6,3 +6,4 @@ node_modules
 *.sql.gz
 *.gz
 .idea
+.phpunit.result.cache
