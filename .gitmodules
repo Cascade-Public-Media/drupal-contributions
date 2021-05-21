@@ -1,0 +1,3 @@
+[submodule "web/modules/http_client_retry"]
+	path = web/modules/http_client_retry
+	url = git@git.drupal.org:project/http_client_retry.git
