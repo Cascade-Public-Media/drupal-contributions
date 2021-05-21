@@ -1,0 +1,15 @@
+{
+    "name": "wells/drupal-contrib",
+    "description": "Drupal contrib modules under development.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christopher C. Wells",
+            "email": "drupal.org@chris-wells.net"
+        }
+    ],
+    "require-dev": {
+        "drupal/coder": "^8.3"
+    }
+}
