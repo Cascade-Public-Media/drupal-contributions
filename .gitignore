@@ -7,3 +7,4 @@ node_modules
 *.gz
 .idea
 .phpunit.result.cache
+composer.lock
