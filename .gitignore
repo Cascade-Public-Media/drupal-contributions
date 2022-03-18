@@ -7,4 +7,5 @@ node_modules
 *.gz
 .idea
 .phpunit.result.cache
+.lando.local.yml
 composer.lock
