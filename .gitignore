@@ -5,3 +5,7 @@ node_modules
 *.sql
 *.sql.gz
 *.gz
+
+.lando.local.yml
+.DS_Store
+.idea
