@@ -10,3 +10,4 @@ node_modules
 .lando.local.yml
 .DS_Store
 composer.lock
+keys
