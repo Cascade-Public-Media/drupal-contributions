@@ -18,7 +18,7 @@ This repo is intended to make it easy to contribute to the [Drupal core](https:/
 
 ## Why?
 
-Setting up, testing, and writing Drupal patches can be a confusing gauntlet to the uninitiated, [thinktandem/drupal-contributions](https://github.com/thinktandem/drupal-contributions) this project automates as much of the process as possible.
+Setting up, testing, and writing Drupal patches can be a confusing gauntlet to the uninitiated, [lando/drupal-contributions](https://github.com/lando/drupal-contributions) this project automates as much of the process as possible.
 
 The spin ups should be considered completely ephemeral as on every `lando rebuild` events will be fired to tear down the current code base and rewrite the database with a fresh install.
 
@@ -40,7 +40,7 @@ Video presentation: [SFDUG - June 25 - Lando for Contrib / LLC, Corporation or S
 Let's step through how to spin up your contribution workflow. First clone down this repo:
 
 ```
-git clone git@github.com:thinktandem/drupal-contributions.git
+git clone -b 10.x git@github.com:lando/drupal-contributions.git
 cd drupal-contributions
 ```
 
@@ -54,7 +54,7 @@ Next `rebuild` the `drupal-contributions` app:
 lando rebuild -y
 ```
 
-This will pull in the drupal source code from the `9.4.x-dev` branch, run `composer install` to get dependencies, install Drupal, and provide us with a one time login link (`uli`).
+This will pull in the drupal source code from the latest `10.x-dev` branch, run `composer install` to get dependencies, install Drupal, and provide us with a one time login link (`uli`). You can update the version in the `/config/drupal-branch.php` file.
 
 After `rebuild` completes you should see something similar to this:
 
@@ -83,12 +83,12 @@ and the `web` directory should be populated with the Drupal source code.
 
 #### Test a Core Patch
 
-Now we are ready to find a Drupal core issue. Search the issue queue for a core `9.x` issue that you want to test. Grab the URL of the latest patch and apply it to our `drupal-contributions` environment.
+Now we are ready to find a Drupal core issue. Search the issue queue for a core `10.x` issue that you want to test. Grab the URL of the latest patch and apply it to our `drupal-contributions` environment.
 
-For example if you choose this issue: https://www.drupal.org/project/drupal/issues/3186076, the latest corresponding patch (as of 20 January 2021) is https://git.drupalcode.org/project/drupal/-/merge_requests/161.diff ("plain diff" link). To apply this patch:
+For example, if you choose the issue [Create new "Views Responsive Grid" format for Views Core](https://www.drupal.org/project/drupal/issues/3151553), the latest corresponding patch (as of 23 April 2022) is https://git.drupalcode.org/project/drupal/-/merge_requests/1585.diff ("plain diff" link). To apply this patch:
 
 ```
-lando patch https://git.drupalcode.org/project/drupal/-/merge_requests/161.diff
+lando patch https://git.drupalcode.org/project/drupal/-/merge_requests/1585.diff
 ```
 
 Note: Both Gitlab-patches with `.diff` suffix as well as the old style `.patch` files will work.
@@ -96,16 +96,16 @@ Note: Both Gitlab-patches with `.diff` suffix as well as the old style `.patch` 
 To revert the patch:
 
 ```
-lando revert 161.diff
+lando revert 1585.diff
 ```
 
 This way we can `apply` and `revert` as many times as we want/need to during our testing.
 
-To test this issue, apply the patch as outlined above, clear caches, and visit for example `/admin/structure/views/view/frontpage`, and see that the "Tour" link has been turned blue, and the text extended to "Take a tour of this page".
+To test this issue, apply the patch as outlined above, clear caches, build a View with the new "Responsive Grid" format (set "Minimum grid cell width" to `200px`,) and see that the elements align nicely.
 
 The patch works!
 
-We can now leave a comment on the issue saying that we tested the patch and it works as expected for us
+We can now leave a comment on the issue saying that we tested the patch and it works as expected for us.
 
 #### Test a Contrib Module Patch
 
@@ -259,10 +259,10 @@ Exclude a group of tests:
 lando phpunit --exclude-group Groupname
 ```
 
-Run a single test from the BigPipe module:
+Run a single test, the Drupal core password hashing API:
 
 ```
-lando phpunit web/core/modules/big_pipe/tests/src/Functional/BigPipeTest.php
+lando phpunit web/core/tests/Drupal/Tests/Core/Password/PasswordHashingTest.php
 ```
 
 #### Nightwatch
@@ -287,7 +287,7 @@ lando nightwatch tests/Drupal/Nightwatch/Tests/exampleTest.js
 
 ## La Fin
 
-Once you have the `9.2.x` you can keep it and sync it periodically and `lando start`'s will keep that around. If you want to totally start fresh:
+Once you have the latest `10.x-dev` branch you can keep it and sync it periodically and `lando start`'s will keep that around. If you want to totally start fresh:
 
 ```
 # destroys drupal-contributions app and removes /web
@@ -298,4 +298,4 @@ lando destroy -y
 lando rebuild  -y
 ```
 
-*Original text from [Lando + Drupal Contributions](https://blog.lando.dev/2020/06/30/lando-drupal-contributions/) by [Geoff St. Pierre](https://twitter.com/serundeputy).*
+*Original text from [Lando + Drupal Contributions](https://lando.dev/blog/2020/06/02/lando-drupal-contributions/) by [Geoff St. Pierre](https://twitter.com/serundeputy).*
